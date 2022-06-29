@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Products{% endblock %}
+{% block start %}
+<link rel="stylesheet" href="{% static "product/index.css" %}">
+<section>
+    <div class="container">
+        {% if object_list %}
+        {% for product in object_list %}
+        <div class="product">
+            <div class="img-container">
+                <img src="/media/{{ product.product_images.all.0.image }}">
+            </div>
+            <div class="product-info">
+                <div class="product-content">
+                    <h1><a href="{% url "product:product" product.slug %}" style="text-decoration: none;">{{product.title}}</a></h1>
+                    <p>{{product.preview_text}}</p>
+                    <p style="color:#03395B;">₹ {{product.price}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+            <div>NO items found!!</div>
+        {% endif %}
+        </div>
+</section>
+{% endblock %}

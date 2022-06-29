@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Add Address{% endblock %}
+{% block start %}
+<link rel="stylesheet" href="{% static "accounts/profile.css" %}">
+<section id="address" class="Add-address" style="background-color:white ; align-items:center;padding: 2% 33%;">
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <span><p class="text-al">Phone Number</p></span>
+            <input type="text" required name="phone" class="text" placeholder="First line of address" />
+        </div>
+        <div>
+            <span><p class="text-al">First line</p></span>
+            <input type="text" required name="first_line" class="text" placeholder="First line of address" />
+        </div>
+        <div>
+            <span><p class="text-al">Second Line</p></span>
+            <input type="text" required name="second_line" class="text" placeholder="Second Line of Address" />
+        </div>
+        <div>
+            <span><p class="text-al">City</p></span>
+            <input type="text" required name="city" class="text" placeholder="City" />
+        </div>
+        <div>
+            <span><p class="text-al">State</p></span>
+            <input type="text" required name="state" class="text" placeholder="State" />
+        </div>
+        <div>
+            <p class="text-al">Pin Code</p>
+            <input type="text" required name="pin" class="text" placeholder="Pincode" />
+        </div>
+
+        <button type="submit" class="button">Add</button>
+    </form>
+</section>
+{% endblock %}

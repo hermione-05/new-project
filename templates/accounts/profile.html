@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{user.user.first_name}}-Profile{% endblock %}
+{% block start %}
+<link rel="stylesheet" href="{% static "accounts/profile.css" %}">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<section class="account">
+    <div class="pfp">
+        <div class="circle"><img src="/media/{{ user.profile_img }}" alt="pfp"></div>
+        <h1>{{user.user.first_name}} {{ user.user.last_name }}</h1>
+        <h3 onclick="document.getElementById('content').innerHTML=document.getElementById('info').innerHTML;" style="cursor: pointer;">profile</h3>
+        <h3 onclick="document.getElementById('content').innerHTML=document.getElementById('cart').innerHTML;" style="cursor: pointer;">Orders</h3>
+        <h3 onclick="document.getElementById('content').innerHTML=document.getElementById('password-change').innerHTML;">Change Password</h3>
+        <h3><a href="{% url "accounts:add_address" %}" style="cursor: pointer;color: red;"> Add Address</a></h3>
+        <h3><a href="{% url "accounts:logout" %}" style="color: red;">LogOut</a></h3>
+    </div>
+    <div id="content" class="info">
+        <button data-modal-target="#modal" style="margin:5% 2% ; background-color: #03395B; color: white; border-radius: 5px; border: transparent; padding: 10px 30px; cursor: pointer;">Add/update profile picture</button>
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <div class="title">Add Profile Picture</div>
+                <button data-close-button class="close-button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url "accounts:pfp" user.uid %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="img" style="margin-right:2% ;">Add Photo</label><input type="file" name="img" id="img">
+                    <button type="submit" style="margin-left:2% ; background-color: #03395B; color: white; border-radius: 5px;
+                    border: transparent; padding: 10px 30px; cursor: pointer;">Add</button>
+                </form>
+            </div>
+        </div>
+        <div id="overlay"></div>
+        <div class="email-address">
+            <div class="email">
+                <h3>Email</h3>
+                <p>{{user.user.email}}</p>
+            </div>
+            <div class="Phone">
+                <h3>Phone</h3>
+                <p>{{user.user.address.all.0.phone_num}}</p>
+            </div>
+            <div class="address">
+                {% if user.user.address.all %}
+                {% for address in user.user.address.all %}
+                <h3>Address: &emsp; <a href="{% url "accounts:del" address.uid %}">&times;</a></h3>
+                <p>
+                    {{ address.first_line }}<br>
+                    {{ address.second_line }}<br>
+                    {{address.city}},{{ address.state }}<br>
+                    {{ address.pin }},India <br><br>
+                </p>
+                {% endfor %}
+                {% else %}
+                <h1 style="margin:5%;"><a href="{% url "accounts:add_address" %}" style="cursor: pointer;color: red;">Add an address</a></h1>
+                {% endif %}
+            </div>
+        </div>
+        <div class="social-links">
+            <p>Share At: </p>
+            <a href="#">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="#">
+                <i class="fab fa-pinterest"></i>
+            </a>
+        </div>
+    </div>
+    
+</section>
+<div class="info" id="info" style="display: none;">
+    <button data-modal-target="#modal" style="margin:5% 2% ; background-color: #03395B; color: white; border-radius: 5px; border: transparent; padding: 10px 30px; cursor: pointer;">Add/update profile picture</button>
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <div class="title">Add Profile Picture</div>
+                <button data-close-button class="close-button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url "accounts:pfp" user.uid %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="img" style="margin-right:2% ;">Add Photo</label><input type="file" name="img" id="img">
+                    <button type="submit" style="margin-left:2% ; background-color: #03395B; color: white; border-radius: 5px;
+                    border: transparent; padding: 10px 30px; cursor: pointer;">Add</button>
+                </form>
+            </div>
+        </div>
+        <div id="overlay"></div>
+    <div class="email-address">
+        <div class="email">
+            <h3>Email</h3>
+            <p>{{user.user.email}}</p>
+        </div>
+        <div class="Phone">
+            <h3>Phone</h3>
+            <p>{{user.user.address.all.0.phone_num}}</p>
+        </div>
+        <div class="address">
+            {% for address in user.user.address.all %}
+            <h3>Address: &emsp; <a href="{% url "accounts:del" address.uid %}">&times;</a></h3>
+            <p>
+                {{ address.first_line }}<br>
+                {{ address.second_line }}<br>
+                {{address.city}},{{ address.state }}<br>
+                {{ address.pin }},India <br><br>
+            </p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="social-links">
+        <p>Share At: </p>
+        <a href="#">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="#">
+            <i class="fab fa-pinterest"></i>
+        </a>
+    </div>
+</div>
+<section id="cart" style="display: none;">
+    <h1>Previous Purchase</h1>
+    {% if items %}
+        {% for item in items %}
+            <div class="Cart-Items">
+                <div class="image-box">
+                    <img src="{{ item.product.product_images.all.0.image.url }}" style="height:120px" />
+                </div>
+                <div class="abt">
+                    <h1 class="title"><a href="{%url "product:product" item.product.slug %}">{{ item.product.title }}</a>
+                    </h1>
+                    <div class="subtitle">{{ item.product.preview_text }}</div>
+                    <h3 class="subtitle">{{ item.size_variant }} {{ item.color_variant }}</h3>
+                </div>
+                <div class="counter">
+                    <div class="count">{{ item.quantity }}</div>
+                </div>
+                <div class="prices">
+                    <div class="amount">${{ item.product.price }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+    <h2>No Items purchased!</h2>
+    {% endif %}
+</section>
+<script>
+    const openModalButtons = document.querySelectorAll('[data-modal-target]')
+    const closeModalButtons = document.querySelectorAll('[data-close-button]')
+    const overlay = document.getElementById('overlay')
+
+    openModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = document.querySelector(button.dataset.modalTarget)
+            openModal(modal)
+        })
+    })
+
+    overlay.addEventListener('click', () => {
+        const modals = document.querySelectorAll('.modal.active')
+        modals.forEach(modal => {
+            closeModal(modal)
+        })
+    })
+
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal')
+            closeModal(modal)
+        })
+    })
+
+    function openModal(modal) {
+        if (modal == null) return
+        modal.classList.add('active')
+        overlay.classList.add('active')
+    }
+
+    function closeModal(modal) {
+        if (modal == null) return
+        modal.classList.remove('active')
+        overlay.classList.remove('active')
+    }
+</script>
+{% endblock %}

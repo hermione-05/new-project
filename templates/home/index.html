@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block start %}
+
+<section id="hero" class="branding">
+    <div class="content text-white">
+        <h1>Shop All</h1>
+        <h2>Find Anything and Everything</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod corrupti harum vero nulla deleniti temporibus possimus magni quaerat suscipit omnis pariatur repellat, ipsam ex mollitia? Voluptatibus et repellendus fuga alias.</p>
+        <button type="button" class="text-small">Shop Now</button>
+    </div>
+    <div class="image">
+        
+    </div>
+</section>
+
+<section class="category" id="category">
+    <h1 class="text-large">Categories</h1>
+    <div class="card">
+        <div class="cards">
+            <img src="{% static "images/men.gif" %}" alt="">
+            <b><p class="text-small">Men</p></b>
+        </div>
+        <div class="cards">
+            <img src="{% static "images/women.gif" %}" alt="">
+            <b><p class="text-small">Women</p></b>
+        </div>
+        <div class="cards">
+            <img src="{% static "images/kimds.gif" %}" alt="">
+            <b><p class="text-small">Kids</p></b>
+        </div>
+        <div class="cards">
+            <img src="{% static "images/access.gif" %}" alt="">
+            <b><p class="text-small">Accessories</p></b>
+        </div>
+        <div class="cards">
+            <a href="#"><img src="{% static "images/foot.gif" %}" alt=""></a>
+            <b><p class="text-small">Footwear</p></b>
+        </div>
+    </div>
+</section>
+
+<section class="about" id="about">
+    <div class="image">
+    </div>
+    <div class="content text-white">
+        <h1>About the Shop</h1>
+        <h2>Find Anything and Everything</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod corrupti harum vero nulla deleniti temporibus possimus magni quaerat suscipit omnis pariatur repellat, ipsam ex mollitia? Voluptatibus et repellendus fuga alias.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem est doloribus quis omnis quasi aperiam voluptate, minima quia iure laborum alias perspiciatis eaque voluptatem fuga nesciunt facilis sit atque optio dolores. Nostrum at voluptas, provident ullam velit ducimus perferendis facere eveniet earum laudantium nam minus voluptate recusandae eius voluptatum nihil necessitatibus ex iste illum omnis doloribus corporis exercitationem mollitia. Maiores?</p>
+    </div>
+</section>
+
+{% endblock %}

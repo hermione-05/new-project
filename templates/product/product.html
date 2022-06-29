@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{product.title}}{% endblock %}
+{% block start %}
+<link rel="stylesheet" href="{% static "product/product.css" %}">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<section class="prod">
+    <div class="card-wrapper">
+        <div class="card">
+            <!-- card left -->
+            <div class="product-imgs">
+                <div class="img-display">
+                    <div class="img-showcase">
+                        {% for image in product.product_images.all %}
+                        <img src="/media/{{image.image}}" alt="shoe image">
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="img-select">
+                    {% for image in product.product_images.all %}
+                    <div class="img-item">
+                        <a href="/media/{{image.image}}" data-id="1">
+                            <img src="/media/{{image.image}}" alt="shoe image" style="height: 150px;">
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- card right -->
+            <div class="product-content">
+                <h2 class="product-title">{{product.title}}</h2>
+                <!-- <a href="#" class="product-link">visit nike store</a> -->
+                <div class="product-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <span>4.7(21)</span>
+                </div>
+
+                <div class="product-price">
+                    <p class="new-price">Price: <span>
+                            {% if updated_price %}
+                            <b>₹{{ updated_price }}</b>
+                            {% else %}
+                            <b>₹{{product.price}}</b>
+                            {% endif %}
+                        </span></p>
+                </div>
+
+                <div class="product-detail">
+                    <p class="text-small">{{product.preview_text}}</p>
+                    <p>{{product.description}}</p>
+                    <div class="sizez">
+                        {% for size in product.size_variant.all %}
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onchange="get_correct_price('{{size.size}}')" name="Size:" {% if selected_size == size.size %} checked {% endif %} style="display:flex;">
+                            <label class="form-check-label" for="flexRadioDefault1">{{size.size}}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="prod-abt" style="font-size: medium; padding-top:2%;">
+                    <li>Available: <span>in stock</span></li>
+                    <li>Category: <span>{{product.category}}</span></li>
+                    <li>Shipping Area: <span>All over the world</span></li>
+                    <li>Shipping Fee: <span>Free</span></li>
+                </div>
+                <div class="purchase-info">
+                    <button type="submit" class="btn"> <a href="{% url "accounts:add_to_cart" product.uid %}?variant={{selected_size}}" style="color: white; text-decoration:none;">Add to Cart </a><i class="fas fa-shopping-cart"></i></button>
+                </div>
+
+                <div class="social-links">
+                    <p>Share At: </p>
+                    <a href="#">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-pinterest"></i>
+                    </a>
+                </div>
+                <div class="ratings">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-wrapper" style="height: auto; margin-bottom:5%; ">
+        <div class="card" style="padding:auto 30% ;padding-left: 5%;">
+            <h2>Reviews</h2>
+            {% if user.is_authenticated %}
+            <button data-modal-target="#modal" class="btn" style="background-color:#03395B ;color:white; border:none;width:50%;height:30px;border-radius:5px;margin-top:2%;cursor: pointer;">Add review</button>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <div class="modal" id="modal">
+                <div class="modal-header">
+                <div class="title">Add Review</div>
+                <button data-close-button class="close-button">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{% url "product:save_review" product.uid %}">
+                        {% csrf_token %}
+                        <div class="rating">
+                            <input id="star5" name="star" type="radio" value="5" class="radio-btn hide" />
+                            <label for="star5" style="size: 50px;">☆</label>
+                            <input id="star4" name="star" type="radio" value="4" class="radio-btn hide" />
+                            <label for="star4" >☆</label>
+                            <input id="star3" name="star" type="radio" value="3" class="radio-btn hide" />
+                            <label for="star3" >☆</label>
+                            <input id="star2" name="star" type="radio" value="2" class="radio-btn hide" />
+                            <label for="star2" >☆</label>
+                            <input id="star1" name="star" type="radio" value="1" class="radio-btn hide" />
+                            <label for="star1" >☆</label>
+                            <div class="clear"></div>
+                        </div>
+                        <textarea name="text" id="" cols="45" rows="10" placeholder="Your Review" class="text" style="margin-left:1% ; font-size: large;"></textarea>
+                        <button type="submit" style="margin-left:2% ; background-color: #03395B; color: white; border-radius: 5px;
+                        border: transparent; padding: 10px 30px; cursor: pointer;">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <div id="overlay"></div>
+            {% endif %}
+            <div class="stars-ratings" style="display: flex;flex-direction:column;">
+                <span class="stars" data-rating="5" data-num-stars="5"></span>
+                <span class="stars" data-rating="4" data-num-stars="4"></span>
+                <span class="stars" data-rating="3" data-num-stars="3"></span>
+                <span class="stars" data-rating="2" data-num-stars="2"></span>
+                <span class="stars" data-rating="1" data-num-stars="1"></span>
+            </div>
+            {% if reviews %}
+            <div class="r">
+                {% for review in reviews %}
+                <div class="reviews" style="display: flex; flex-direction: column; margin: 5% 0;">
+                    <div class="pfp-name" style="display: flex;">
+                        <img src="/media/{{ review.user.profile.profile_img }}" alt="pfp" style="height: 50px;width: 50px;border-radius: 100px; border:solid 2px black; margin: 2%;"> 
+                        <div>
+                            <p>{{ review.user.first_name }}{{ review.user.last_name }}</p>
+                            <span class="stars" data-rating="{{ review.rating }}" data-num-stars="5"></span>
+                        </div>
+                    </div>
+                    <p>{{ review.review_text }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p>No reviews till now!</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<script src="{%static "product/style.js" %}"></script>
+<script>
+    function get_correct_price(size){
+        window.location.href = window.location.pathname+`?size=${size}`
+    }
+    const openModalButtons = document.querySelectorAll('[data-modal-target]')
+    const closeModalButtons = document.querySelectorAll('[data-close-button]')
+    const overlay = document.getElementById('overlay')
+
+    openModalButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const modal = document.querySelector(button.dataset.modalTarget)
+        openModal(modal)
+        })
+    })
+
+    overlay.addEventListener('click', () => {
+        const modals = document.querySelectorAll('.modal.active')
+        modals.forEach(modal => {
+            closeModal(modal)
+        })
+    })
+
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal')
+            closeModal(modal)
+        })
+    })
+
+    function openModal(modal) {
+        if (modal == null) return
+        modal.classList.add('active')
+        overlay.classList.add('active')
+    }
+
+    function closeModal(modal) {
+        if (modal == null) return
+        modal.classList.remove('active')
+        overlay.classList.remove('active')
+    }
+    $(function(){
+        $('.stars').stars();
+    });
+    $.fn.stars = function() {
+        return $(this).each(function() {
+            var rating = $(this).data("rating");
+            var fullStar = new Array(Math.floor(rating + 1)).join('<i class="fas fa-star"></i>');
+            var halfStar = ((rating%1) !== 0) ? '<i class="fas fa-star-half-alt"></i>': '';
+            var noStar = new Array(Math.floor($(this).data("numStars") + 1 - rating)).join('<i class="far fa-star"></i>');
+            $(this).html(fullStar + halfStar + noStar);
+        });
+    }
+
+    $.fn.stars = function() {
+        return $(this).each(function() {
+            const rating = $(this).data("rating");
+            const numStars = $(this).data("numStars");
+            const fullStar = '<i class="fas fa-star"></i>'.repeat(Math.floor(rating));
+            const halfStar = (rating%1!== 0) ? '<i class="fas fa-star-half-alt"></i>': '';
+            const noStar = '<i class="far fa-star"></i>'.repeat(Math.floor(numStars-rating));
+            $(this).html(`${fullStar}${halfStar}${noStar}`);
+        });
+    }
+</script>
+<style>
+    .hide {
+    display: none;
+}
+
+.clear {
+    float: none;
+    clear: both;
+}
+
+.rating {
+    width: 160px;
+    unicode-bidi: bidi-override;
+    direction: ltr;
+    text-align: center;
+    position: relative;
+}
+
+.rating > label {
+    float: right;
+    display: inline;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    width: 0.9em;
+    cursor: pointer;
+    color: #000;
+    font-size: xx-large;
+}
+
+.rating > label:hover,
+.rating > label:hover ~ label,
+.rating > input.radio-btn:checked ~ label {
+    color: transparent;
+}
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > input.radio-btn:checked ~ label:before,
+.rating > input.radio-btn:checked ~ label:before {
+    content: "\2605";
+    position: absolute;
+    left: 0;
+    color: #FFD700;
+}
+</style>
+{% endblock %}

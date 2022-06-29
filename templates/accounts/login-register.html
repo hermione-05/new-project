@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Login/Register{% endblock %}
+{% block start %}
+
+<link rel="stylesheet" href="{% static "accounts/cart.css" %}">
+<section class="Cart">
+    <div class="login">
+        <form method="POST">
+            {% csrf_token %}
+            {% include 'alert.html' %}
+            <h1 class="text-al"> Login </h1>
+            <div>
+                <p class="text-al">Email</p>
+                <input type="email" name="email" id="form2Example1" class="text" placeholder="Email" />
+            </div>
+            <div>
+                <p class="text-al">Password</p>
+                <input type="password" name="password" id="form2Example2" class="text" placeholder="Password" />
+            </div>
+
+            <div class="col">
+                <a href="#!" class="text-al">Forgot password?</a>
+            </div>
+            <button type="submit" class="button" name="login">Sign in</button>
+        </form>
+    </div>
+    <div class="login">
+        <h1 class="text-al">SignUp</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {% include "alert.html" %}
+            <div>
+                <span>
+                    <p class="text-al">First Name</p>
+                </span>
+                <input type="text" required name="first_name" class="text" placeholder="First Name" />
+            </div>
+            <div>
+                <span>
+                    <p class="text-al">Last Name</p>
+                </span>
+                <input type="text" required name="last_name" class="text" placeholder="Last Name" />
+            </div>
+            <div>
+                <span>
+                    <p class="text-al">Email</p>
+                </span>
+                <input type="email" required name="email_id" class="text" placeholder="Email" />
+            </div>
+            <div>
+                <p class="text-al">Password</p>
+                <input type="password" required name="password" class="text" placeholder="Password" />
+            </div>
+
+            <button type="submit" class="button" name="register">SignUp</button>
+        </form>
+    </div>
+
+</section>
+
+{% endblock %}

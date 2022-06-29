@@ -1,0 +1,332 @@
+.social-links{
+    display: flex;
+    align-items: center;
+    padding-left: 2%;
+}
+.social-links a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: #03395B;
+    border: 1px solid #03395B;
+    margin: 0 0.2rem;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: all 0.5s ease;
+}
+.socials{
+    padding: 1.5% 30%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.social-links a:hover{
+    background: #03395B;
+    border-color: transparent;
+    color: #fff;
+}
+.social-links .socials{
+    padding: 1.5% 30%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.account{
+    display: flex;
+    background-color: white;
+    justify-content: space-evenly;
+    padding: 5% 15%;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+.pfp{
+    width: 30%;
+	height: 100%;
+	background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 10px 20px #c6c6c6;
+    padding: 15px 20px;
+    font-family: 'Inter';
+    font-size: small;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.pfp h3{
+    text-decoration: none;
+    color: red;
+    font-weight: 500;
+    text-decoration: none;
+    background: linear-gradient(rgb(255, 0, 0), rgb(255, 0, 0)) bottom/0% 2px no-repeat;
+    transition:0.5s all;
+}
+.pfp h3:hover{
+    background-size: 100% 2px;
+}
+.pfp *{
+    padding-top: 20px;
+}
+
+.info{
+    width: 55%;
+	height: 100%;
+	background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 10px 20px #c6c6c6;
+    padding: 15px 20px;
+    font-family: 'Inter';
+    font-size: small;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+.email-address{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.email{
+    width: 72%;
+    padding-bottom: 5%;
+}
+.phone{
+    width: 50%;
+}
+.address{
+    width: 100%;
+}
+.email-address *{
+    padding-top: 10px;
+}
+.info h1{
+    font-size: large;
+}
+
+.button{
+	margin-top: 10px;
+    margin-left: 10px;
+	width: 50%;
+	height: 40px;
+	border: solid #03395B 2px;
+	background: linear-gradient(to bottom right, #113769, #03395B);
+	border-radius: 10px;
+	cursor: pointer;
+	font-size: 16px;
+	font-family: 'Inter';
+	color: #ffffff;
+    margin-top: 5%;
+}
+.text{
+    margin-top: 10px;
+    margin-left: 10px;
+    padding-left: 10px;
+	width: 500px;
+	height: 30px;
+    border: solid #03395B 2px;
+	background: linear-gradient(to bottom right, #ffffff, #F4F4F4);
+	border-radius: 5px;
+	font-size: 16px;
+	font-family: 'Inter';
+	color: #202020;
+}
+.text-al{
+    font-family: 'Inter';
+    margin: 10px 0px 0px 15px;
+    font-size: medium;
+    font-weight: 400;
+}
+
+a{
+    text-decoration: none;
+}
+.pad{
+	margin-top: 5px;
+}
+.Cart{
+    display: flex;
+    background-color: white;
+    padding: 5% 0%;
+    justify-content: space-evenly;
+}
+.Cart-Items{
+    display: flex;
+    padding: 20px 0px;
+}
+.CartContainer{
+	width: 70%;
+	height: 90%;
+	background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px #c6c6c6;
+    padding: 15px 0px;
+}
+
+.Header{
+	margin: auto;
+	width: 90%;
+	height: 15%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.Heading{
+	font-family: 'Inter', sans-serif;
+    color: #03395B;
+    font-size: large;
+}
+
+.Action{
+	font-size: 14px;
+	font-family: 'Open Sans';
+	font-weight: 600;
+	color: #E44C4C;
+	cursor: pointer;
+	border-bottom: 1px solid #E44C4C;
+}
+
+.Cart-Items{
+	margin: auto;
+	width: 90%;
+	height: 30%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.image-box{
+	width: 15%;
+	text-align: center;
+}
+.abt{
+	height: 100%;
+	width: 24%;
+}
+.title{
+	padding-top: 10px;
+	line-height: 10px;
+	font-family: 'Inter', sans-serif;
+    color: #03395B;
+    font-size: large;
+}
+.subtitle{
+	line-height: 30px;
+    font-family: 'Inter', sans-serif;
+    color: #03395B;
+    font-size: medium;
+}
+
+.counter{
+	width: 15%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.btn{
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: #d9d9d9;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 20px;
+	font-family: 'Inter';
+	font-weight: 900;
+	color: #03395B;
+	cursor: pointer;
+}
+.count{
+	font-size: 20px;
+	font-family: 'Inter';
+	font-weight: 600;
+	color: #03395B;
+}
+
+.prices{
+	height: 100%;
+	text-align: right;
+}
+
+.Action{
+    font-family: 'Inter', sans-serif;
+    color: #E44C4C;
+    font-size: large;
+}
+.amount{
+	padding-top: 20px;
+	font-family: 'Inter', sans-serif;
+    color: #03395B;
+    font-size: large;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    border: 1px solid black;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: white;
+    width: 500px;
+    max-width: 80%;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.modal-header .title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.modal-header .close-button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.modal-body {
+    padding: 10px 15px;
+}
+
+#overlay {
+    position: fixed;
+    opacity: 0;
+    transition: 200ms ease-in-out;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+    pointer-events: none;
+}
+
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+ 
+.circle img { 
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+}

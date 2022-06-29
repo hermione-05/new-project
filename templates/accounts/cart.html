@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block title %}Cart{% endblock %}
+{% load static %}
+{% block start %}
+<link rel="stylesheet" href="{% static "accounts/cart.css" %}">
+<section class="Cart">
+    {% if user.is_authenticated %}
+    <div class="CartContainer">
+        <div class="Header">
+            <h3 class="Heading">Shopping Cart</h3>
+            <h5 class="Action">Remove all</h5>
+        </div>
+        {% if cart_items %}
+            {% for item in cart_items %}
+            <div class="Cart-Items">
+                <div class="image-box">
+                    <img src="{{ item.product.product_images.all.0.image.url }}" style="height:120px" />
+                </div>
+                <div class="abt">
+                    <h1 class="title"><a href='{%url 'product:product' item.product.slug %}'>{{ item.product.title }}</a>
+                    </h1>
+                    <div class="subtitle">{{ item.product.preview_text }}</div>
+                    <h3 class="subtitle">{{ item.size_variant }} {{ item.color_variant }}</h3>
+                </div>
+                <div class="counter">
+                    <div class="btn"><a href="{% url "accounts:increase" item.uid %}">+</a></div>
+                    <div class="count">{{ item.quantity }}</div>
+                    <div class="btn"><a href="{% url "accounts:decrease" item.uid %}">-</a></div>
+                </div>
+                <div class="prices">
+                    <div class="amount">${{ item.product.price }}</div>
+                    <div class="save"><u>Save for later</u></div>
+                    <div class="remove"><u><a href="{% url "accounts:remove_cart" item.uid %}">Remove</a> </u></div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="cart-items" style="height:150px ;">
+                <h1 style="padding-top:5% ; font-family:'Inter'">Shopping cart is Empty!</h1>
+            </div>
+        {% endif %}
+    </div>
+    </div>
+    <div class="costs">
+        <form method="POST">
+            {% csrf_token %}
+            {% include "alert.html" %}
+            <input type="text" name="coupon" placeholder="CouponCode" class="text">
+            <button type="submit" class="button">Apply coupon</button>
+        </form>
+        {% if cart.coupon %}
+        <div>
+            <a href="{% url "accounts:remove_coupon" cart.uid %}"><button class="button">{{ cart.coupon.coupon_code }}</button></a>
+        </div>
+        {% endif %}
+        <div class="bill">
+            <h1>Total</h1>
+            <p>Total Price : &emsp; {{ price }}</p>
+            {% if price_gst %}
+            <p>Gst Invoice:&emsp; {{ gst }}</p>
+            <p>Total Price :&emsp; {{ price_gst }}</p>
+            {% endif %}
+        </div>
+        {% if user.address.all %}
+        <button class="button" id="rzp-button1">Checkout</button></a>
+        {% else %}
+        <button data-modal-target="#modal" style="margin:5% 2% ; background-color: #03395B; color: white; border-radius: 5px; border: transparent; padding: 10px 30px; cursor: pointer;">Add Address</button>
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <div class="title">Add Address</div>
+                <button data-close-button class="close-button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url "accounts:add_address" %}">
+                    {% csrf_token %}
+                    <div>
+                        <span><p class="text-al">Phone Number</p></span>
+                        <input type="text" required name="phone" class="text" placeholder="First line of address" />
+                    </div>
+                    <div>
+                        <span><p class="text-al">First line</p></span>
+                        <input type="text" required name="first_line" class="text" placeholder="First line of address" />
+                    </div>
+                    <div>
+                        <span><p class="text-al">Second Line</p></span>
+                        <input type="text" required name="second_line" class="text" placeholder="Second Line of Address" />
+                    </div>
+                    <div>
+                        <span><p class="text-al">City</p></span>
+                        <input type="text" required name="city" class="text" placeholder="City" />
+                    </div>
+                    <div>
+                        <span><p class="text-al">State</p></span>
+                        <input type="text" required name="state" class="text" placeholder="State" />
+                    </div>
+                    <div>
+                        <p class="text-al">Pin Code</p>
+                        <input type="text" required name="pin" class="text" placeholder="Pincode" />
+                    </div>
+
+                    <button type="submit" class="button">Add</button>
+                </form>
+            </div> 
+        </div>
+        <div id="overlay"></div>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="CartContainer">
+        <h1>
+            Kindly Login!
+            have not account? Register!
+        </h1>
+    </div>
+    {% endif %}
+</section>
+<script src="{% static "accounts/cart.js" %}"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js" ></script>
+<script>
+    var options = {
+        "key": "rzp_test_JNrVuhqE6brQ0r",
+        "amount": "{{ payment.amount }}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "Shopall Ecommerce",
+        "description": "Purchases",
+        "image": "https://example.com/your_logo",
+        "order_id": "{{ payment.id }}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "handler": function (response){
+
+            window.location.href = `http://127.0.0.1:8000/accounts/success/?order_id={{ payment.id }}`
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response){
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+    });
+    document.getElementById('rzp-button1').onclick = function(e){
+        rzp1.open();
+        e.preventDefault();
+    }
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% if messages %}
+    {% for m in messages %}
+    <div class="alert alert-{% if m.tags %} class="{{ m.tags }}" {% endif %}" role="alert">
+        {{ m }}
+    </div>
+    {% endfor %}
+{% endif %}
+
+<style>
+    .warning{
+        color: red;
+        background-color: rgb(243, 150, 150);
+        font-family: 'Inter';
+        font-size: medium;
+    }
+    .success{
+        color: green;
+        background-color: rgb(178, 248, 178);
+        font-family: 'Inter';
+        font-size: medium;
+    }
+</style>
